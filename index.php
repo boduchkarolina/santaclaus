@@ -1,8 +1,9 @@
-<!DOCTYPE HTML>
-
 <?php
+	ob_start();
 	session_start();
-$_SESSION['logged_in'] = false;
+
+	$_SESSION['logged_in'] = false;
+
 	$username ="santaclaus";
 	$password ="Laponia";
 
@@ -12,16 +13,17 @@ $_SESSION['logged_in'] = false;
 
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		if ($_POST['username'] == $username && $_POST['password'] == $password)
-	{
+		{
 			$_SESSION['logged_in'] = true;
-			header("Location: ./children_list.php");  
+			header("Location: ./children_list.php");
 		}
 }
-?>
 
+?>
+<!DOCTYPE HTML>
 <html>
 	<body>
-		<form method="post" action="login.php">
+		<form method="post" action="">
 			Username:<br/>
 			<input type="text" name="username">
 			Password<br/>
