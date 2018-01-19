@@ -7,7 +7,7 @@
 
 		require 'connection.php';
 
-
+		$GLOBALS['notyfication'] = "";
 
 		if( isset( $_GET['delate'] ) )
 		{
@@ -18,10 +18,14 @@
 
 		if(  isset( $_GET['update'] ))
 		{
-
-			$query = "UPDATE children SET child_name = '".$_GET['name']."', child_surname = '".$_GET['surname']."', child_age='".$_GET['age']."', child_address='".$_GET['address']."'  WHERE child_id =".$_GET['id'];
-			pg_query( $query ) or die('Query failed: ' . pg_last_error());
-			header("Location: children_list.php");
+			if( validForm($_GET['name'], $_GET['surname'], $_GET['age'], $_GET['address']) )
+			{
+				$query = "UPDATE children SET child_name = '".$_GET['name']."', child_surname = '".$_GET['surname']."', child_age='".$_GET['age']."', child_address='".$_GET['address']."'  WHERE child_id =".$_GET['id'];
+				pg_query( $query ) or die('Query failed: ' . pg_last_error());
+				header("Location: children_list.php");
+			}
+			else
+				$GLOBALS['notyfication'] = "Error: ".$GLOBALS['notyfication'];
 
 		}
 		$idToEdit = null;
@@ -56,6 +60,7 @@
 		<div class="row">
 			<div class="container-fluid">
 				<div class = "col-md-10">
+					<?php if( $GLOBALS['notyfication'] != "" ) echo $GLOBALS['notyfication']; ?>
 				 <table class="table table-striped">
 					 <tr>
 					 	<th>ID</th>

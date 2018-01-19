@@ -21,9 +21,15 @@
             {
               if($age < 18)
               {
-                if(   $address != null && $address != "" )
+                if(   $address != null && $address != "" ){
+                  if( !preg_match("/^[a-zA-Z ]*$/", $addres) )
+                    {
+                      $GLOBALS['notyfication'] = " Adres powinien składać się z Liter ";
+                      return false;
+                    }
                   $GLOBALS['notyfication'] = "Dane dodane poprawnie";
-                 return true;
+                  return true;
+               }
               }
               else {
                 $GLOBALS['notyfication'] = "Za stary na prezent";
