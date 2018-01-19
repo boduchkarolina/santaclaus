@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Baza Grzecznych lub mniej dzieci Świętego Mikołaja</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+
 <?php
 	session_start();
 
@@ -6,15 +18,16 @@
 
 
 		require 'connection.php';
-
+		$GLOBALS['active'] = "children_list";
 		$GLOBALS['notyfication'] = "";
+
 
 		if( isset( $_GET['delate'] ) )
 		{
-			$query = "DELETE FROM children where child_id=".$_GET['delate']."";
-			echo $query;
+			$query = "DELETE FROM children where child_id=".$_GET['delate'];
 			pg_query( $query ) or die('Query failed: ' . pg_last_error());
 		}
+
 
 		if(  isset( $_GET['update'] ))
 		{
@@ -38,17 +51,7 @@
 
 ?>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Baza Grzecznych lub mniej dzieci Świętego Mikołaja</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0">
-    <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/index.css">
-  </head>
-  <body>
+
     <div class="container-fluid">
     <div class="jumbotron text-center">
       <h1 class="logo-txt">Witaj świety Mikołaju</h1>
@@ -104,7 +107,7 @@
 
 			</div>
 		</div>
-
+</div>
 
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

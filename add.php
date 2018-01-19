@@ -2,7 +2,7 @@
 	session_start();
 
 		require 'connection.php';
-
+		$GLOBALS['active'] = "add";
 		if( isset( $_POST['add'] ) && $_POST['add'] == 'true'  )
 		{
         $name = $_POST['child_name'];
@@ -11,6 +11,8 @@
         $address = $_POST['child_address'];
 
 				$GLOBALS['notyfication'] = "";
+
+
         if( validForm( $name, $surname, $age, $address ) )
         {
 			      $query = "INSERT INTO children ( child_name, child_surname, child_age, child_address ) VALUES ( '".$name."','". $surname."','".$age."','".$address."' )";
@@ -31,7 +33,7 @@
     <meta name="viewport" content="initial-scale=1.0">
     <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
     <div class="container-fluid">

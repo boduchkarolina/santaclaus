@@ -1,27 +1,13 @@
+nav{
+  margin: 10px 0 20px 0;
+}
+
 .logo-txt{
      font-family: Pacifico;
      color: #fff;
      font-size: 6em;
      width: 100%;
-     position: absolute;
      vertical-align: middle;
      margin-top: 1em;
-                     text-align: top;
- }
-
- .navbar {
-     background-color: #2d2d30;
-     letter-spacing: 4px;
-     opacity: 0.7;
-
- }
-
- .carousel-inner > .item > img,
- .carousel-inner > .item > a > img {
-     width: 100%;
-     margin: auto;
- }
-
- #tours{
-     padding-top: 10px;
+      text-align: top;
  }

@@ -21,8 +21,9 @@
             {
               if($age < 18)
               {
-                if(   $address != null && $address != "" ){
-                  if( !preg_match("/^[a-zA-Z ]*$/", $addres) )
+                if(   $address != null && $address != "" )
+                {
+                  if( !preg_match("/^[a-zA-Z ]*$/", $address) )
                     {
                       $GLOBALS['notyfication'] = " Adres powinien składać się z Liter ";
                       return false;
