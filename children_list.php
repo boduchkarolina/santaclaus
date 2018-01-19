@@ -6,20 +6,31 @@
 
 
 		require 'connection.php';
-		$query = 'SELECT * FROM children';
-		$result = pg_query( $query ) or die('Query failed: ' . pg_last_error());
+
 
 
 		if( isset( $_GET['delate'] ) )
 		{
-			$query = "DELETE FROM children where children_id='".$_GET['delate']."'";
+			$query = "DELETE FROM children where child_id=".$_GET['delate']."";
+			echo $query;
 			pg_query( $query ) or die('Query failed: ' . pg_last_error());
 		}
 
+		if(  isset( $_GET['update'] ))
+		{
+
+			$query = "UPDATE children SET child_name = '".$_GET['name']."', child_surname = '".$_GET['surname']."', child_age='".$_GET['age']."', child_address='".$_GET['address']."'  WHERE child_id =".$_GET['id'];
+			pg_query( $query ) or die('Query failed: ' . pg_last_error());
+			header("Location: children_list.php");
+
+		}
 		$idToEdit = null;
 
-		if( isset( $_GET['edit'] ))
-			$idToEdit = $_GET[' edit '];
+		if( isset( $_GET['edit'] ) )
+			$idToEdit = $_GET['edit'];
+
+		$query = 'SELECT * FROM children';
+		$result = pg_query( $query ) or die('Query failed: ' . pg_last_error());
 
 ?>
 
@@ -60,14 +71,27 @@
 					{
 							echo "\t<tr>\n";
 
+							$i = 1;
 							foreach ($line as $col_value)
 							{
-
-									echo "\t\t<td>$col_value</td>\n";
-
+									if( $idToEdit == null || $line['child_id'] != $idToEdit || $col_value ==  $line['child_id'])
+										echo "\t\t<td>$col_value</td>\n";
+									else if( isset($_GET['edit']) && $line['child_id'] == $idToEdit  )
+										echo "<td><input type='text' id='inp".$i."' value='".$col_value."'</td>\n";
+									$i++;
 							}
-							echo "\t\t<td><a href='children_list.php?edit=".$line['child_id']."'>edytuj</a></td>\n";
-							echo "\t\t<td><a href='children_list.php?delate=".$line['child_id']."'>usuń</a></td>\n";
+							if( $idToEdit == null || $line['child_id'] != $idToEdit )
+							{
+								echo "\t\t<td><a href='children_list.php?edit=".$line['child_id']."'>edytuj</a></td>\n";
+								echo "\t\t<td><a href='children_list.php?delate=".$line['child_id']."'>usuń</a></td>\n";
+							}
+							else if( isset($_GET['edit']) && $line['child_id'] == $idToEdit  )
+							{
+								echo "\t\t<td><button onclick='update(".$line['child_id'].")'>Zapisz</button></td>\n";
+								echo "\t\t<td><a href='children_list.php?delate=".$line['child_id']."'>usuń</a></td>\n";
+							}
+
+
 							echo "\t</tr>\n";
 					}
 					?>
@@ -80,6 +104,19 @@
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			function update( id )
+			{
+					var name = $('#inp2').val()
+					var surname = $('#inp3').val()
+					var age = $('#inp4').val()
+					var address = $('#inp5').val()
+					console.log(name + " " + surname + " "+ age + " "+address );
+
+					var link = './children_list.php?update=true&name='+name+'&surname='+surname+'&age='+age+'&address='+address+"&id="+id;
+					document.location.href = link;
+			}
+		</script>
 </body>
 </html>
 

@@ -12,7 +12,7 @@
 
         if( validForm( $name, $surname, $age, $address ) )
         {
-			       $query = "INSERT INTO children ( child_name, child_surname, child_age, child_address ) VALUES ( '".$name."','". $surname."','".$age."','".$address."' )";
+			      $query = "INSERT INTO children ( child_name, child_surname, child_age, child_address ) VALUES ( '".$name."','". $surname."','".$age."','".$address."' )";
             pg_query( $query ) or die('Query failed: ' . pg_last_error());
 
              $notyfication = "Dane dodane poprawnie";
@@ -20,20 +20,30 @@
         else
         {
           echo $name." ".$surname." ".$age." ".$address;
-          $notyfication = "Żadne pole nie może być puste";
+
         }
 		}
 
     function validForm( $name, $surname, $age, $address )
     {
-      if(  $name != null && $name != "" ){
+      if(  $name != null && $name != "" )
+      {
         if(  $surname != null && $surname != "" )
           if(  $age != null && $age != "" )
-            if(   $address != null && $address != "" )
-
-              return true;
+          {
+            if($age < 18)
+            {
+              if(   $address != null && $address != "" )
+               return true;
             }
-          return false;
+            else {
+              $notyfication = "Za stary na prezent";
+              return false;
+            }
+          }
+        }
+        $notyfication = "Żadne pole nie może być puste";
+        return false;
     }
 
 ?>
@@ -59,32 +69,32 @@
 		?>
 		<div class="row">
 			<div class="container-fluid">
-				<div class = "col-md-10">
+				<div class = "col-md-5">
           <?php
             echo $notyfication;
           ?>
           <form action="add.php" method="post">
-            <label for="">
-              Imię
-              <input type="text" name="child_name" value="">
-            </label>
-            <label for="">
-              Nazwisko
-              <input type="text" name="child_surrname" value="">
-            </label>
-            <label for="">
-              Wiek
-              <input type="number" name="child_age" value="">
-            </label>
-            <label for="">
-              Adress
-              <input type="text" name="child_address" value="">
-            </label>
+            <div class="form-group">
+              <label for="">  Imię  </label>
+              <input type="text" class="form-control" name="child_name" value="">
+            </div>
+            <div class="form-group">
+              <label for="">  Nazwisko  </label>
+              <input type="text" class="form-control" name="child_surrname" value="">
+            </div>
+            <div class="form-group">
+              <label for=""> Wiek </label>
+              <input type="number" class="form-control" name="child_age" value="">
+            </div>
+            <div class="form-group">
+              <label for="">  Adress</label>
+              <input type="text" class="form-control" name="child_address" value="">
+            </div>
             <input type="hidden" name="add" value="true">
-            <input type="submit" value="Wyślij">
+            <input  class="btn btn-default" type="submit" value="Dodaj">
           </form>
 
-
+        </div>
 			</div>
 		</div>
 
