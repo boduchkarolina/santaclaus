@@ -10,41 +10,16 @@
         $age = $_POST['child_age'];
         $address = $_POST['child_address'];
 
+				$GLOBALS['notyfication'] = "";
         if( validForm( $name, $surname, $age, $address ) )
         {
 			      $query = "INSERT INTO children ( child_name, child_surname, child_age, child_address ) VALUES ( '".$name."','". $surname."','".$age."','".$address."' )";
             pg_query( $query ) or die('Query failed: ' . pg_last_error());
-
-             $notyfication = "Dane dodane poprawnie";
         }
-        else
-        {
-          echo $name." ".$surname." ".$age." ".$address;
-
-        }
+				else
+				$GLOBALS['notyfication'] = "Error: ".$GLOBALS['notyfication'];
 		}
 
-    function validForm( $name, $surname, $age, $address )
-    {
-      if(  $name != null && $name != "" )
-      {
-        if(  $surname != null && $surname != "" )
-          if(  $age != null && $age != "" )
-          {
-            if($age < 18)
-            {
-              if(   $address != null && $address != "" )
-               return true;
-            }
-            else {
-              $notyfication = "Za stary na prezent";
-              return false;
-            }
-          }
-        }
-        $notyfication = "Żadne pole nie może być puste";
-        return false;
-    }
 
 ?>
 
@@ -71,7 +46,8 @@
 			<div class="container-fluid">
 				<div class = "col-md-5">
           <?php
-            echo $notyfication;
+          	if( $GLOBALS['notyfication'] != "" )
+					 			echo $GLOBALS['notyfication'];
           ?>
           <form action="add.php" method="post">
             <div class="form-group">
