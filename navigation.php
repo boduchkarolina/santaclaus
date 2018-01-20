@@ -4,6 +4,7 @@
       <ul class="nav nav-pills">
         <li role="presentation" class='<?php if($GLOBALS['active']=='children_list') echo 'active'; ?>'><a href="children_list.php">Grzeczne dzieci</a></li>
         <li role="presentation" class='<?php if($GLOBALS['active']=='add') echo 'active'; ?>'><a href="add.php">Dodaj nowe Dziecko</a></li>
+        <li role="presentation" class='<?php if($GLOBALS['active']=='checkGift') echo 'active'; ?>'><a href="check_gift.php">Sprawdź pomysł na prezent</a></li>
         <li role="presentation" ><a href="logout.php">Wyloguj</a></li>
       </ul>
     </div>
